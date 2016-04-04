@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    @comment = current_user.comments.new(comment_params)
 
     if @comment.save
       render json: @comment, status: :created, location: @comment
@@ -30,7 +30,7 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    @comment = Comment.find(params[:id])
+    @comment = current_user.comments.find(params[:id])
 
     if @comment.update(comment_params)
       head :no_content
@@ -50,7 +50,7 @@ class CommentsController < ApplicationController
   private
 
     def set_comment
-      @comment = Comment.find(params[:id])
+      @comment = current_user.comments.find(params[:id])
     end
 
     def comment_params
