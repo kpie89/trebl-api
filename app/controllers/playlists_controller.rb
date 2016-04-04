@@ -32,7 +32,7 @@ class PlaylistsController < ProtectedController
   # PATCH/PUT /playlists/1
   # PATCH/PUT /playlists/1.json
   def update
-    @playlist = Playlist.find(params[:id])
+    @playlist = current_user.playlists.find(params[:id])
 
     if @playlist.update(playlist_params)
       head :no_content
