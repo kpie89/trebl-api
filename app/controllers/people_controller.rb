@@ -18,8 +18,10 @@ class PeopleController < ProtectedController
   # POST /people
   # POST /people.json
   def create
-    # Associate person with user and delete any other existing associations
-    @person = current_user.person(person_params)
+
+    @person = current_user.build_person(person_params)
+
+
 
     if @person.save
       render json: @person, status: :created, location: @person
@@ -31,10 +33,10 @@ class PeopleController < ProtectedController
   # PATCH/PUT /people/1
   # PATCH/PUT /people/1.json
   def update
-    @person = Person.find(params[:id])
+    @person = current_user.person
 
     if @person.update(person_params)
-      head :no_content
+      head :created
     else
       render json: @person.errors, status: :unprocessable_entity
     end
@@ -51,7 +53,7 @@ class PeopleController < ProtectedController
   private
 
     def set_person
-      @person = current_user.find(params[:id])
+      @person = current_user.person
     end
 
     def person_params
