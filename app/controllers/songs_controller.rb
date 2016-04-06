@@ -1,6 +1,12 @@
 class SongsController < ApplicationController
   before_action :set_song, only: [:show, :update, :destroy]
 
+  def search_songs
+    @song = Song.search_songs(params[:key])
+
+    render json: @song
+  end
+
   # GET /songs
   # GET /songs.json
   def index
@@ -54,6 +60,6 @@ class SongsController < ApplicationController
     end
 
     def song_params
-      params.require(:song).permit(:playlist_id, :comment_id)
+      params.require(:song).permit(:title, :duration, :soundcloud_id)
     end
 end
