@@ -1,5 +1,12 @@
 class CommentsController < ProtectedController
   before_action :set_comment, only: [:show, :update, :destroy]
+  before_action :set_playlist
+
+  def search_tracks
+    @beer = Playlist.search_by_key(params[:search_key])
+
+    render json: @beer
+  end
 
   # GET /comments
   # GET /comments.json
@@ -18,7 +25,7 @@ class CommentsController < ProtectedController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = current_user.comments.new(comment_params)
+    @comment = @playlist.comments.build(comment_params)
 
     if @comment.save
       render json: @comment, status: :created, location: @comment
@@ -49,11 +56,15 @@ class CommentsController < ProtectedController
 
   private
 
+    def set_playlist
+      @playlist = Playlist.find(params[:playlist_id])
+    end
+
     def set_comment
       @comment = current_user.comments.find(params[:id])
     end
 
     def comment_params
-      params.require(:comment).permit(:desc, :person_id)
+      params.require(:comment).permit(:desc, :user_id)
     end
 end
