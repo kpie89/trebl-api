@@ -1,5 +1,10 @@
 class SongSerializer < ActiveModel::Serializer
-  attributes :id
-  has_one :playlist
-  has_one :comment
+  attributes :id, :title, :duration, :soundcloud_id, :playlists
+  has_many :playlists
+  has_many :comments
+
+  def playlists
+    object.playlists.pluck(:id)
+  end
+
 end
