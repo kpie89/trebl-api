@@ -1,5 +1,5 @@
-class PlaylistsController < ProtectedController
-  before_action :set_playlist, only: [:show, :update, :destroy]
+class PlaylistsController < OpenReadController
+  before_action :set_playlist, only: [:update, :destroy]
 
   # GET /playlists
   # GET /playlists.json
@@ -12,7 +12,7 @@ class PlaylistsController < ProtectedController
   # GET /playlists/1
   # GET /playlists/1.json
   def show
-    render json: @playlist
+    render json: Playlist.find(params[:id])
   end
 
   # POST /playlists
@@ -56,6 +56,6 @@ class PlaylistsController < ProtectedController
     end
 
     def playlist_params
-      params.require(:playlist).permit(:title, :desc, :person_id)
+      params.require(:playlist).permit(:title, :desc, :person_id, :song_id)
     end
 end
