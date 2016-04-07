@@ -1,8 +1,3 @@
 class PlaylistSerializer < ActiveModel::Serializer
-  attributes :id, :title, :desc
-
-  # def song
-  #   object.song.pluck(:title)
-  # end
-
+  attributes :id, :title, :desc, :song_id
 end
