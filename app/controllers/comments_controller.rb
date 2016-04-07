@@ -1,6 +1,6 @@
 class CommentsController < ProtectedController
   before_action :set_comment, only: [:show, :update, :destroy]
-  before_action :set_playlist
+  # before_action :set_playlist
 
   def search_tracks
     @beer = Playlist.search_by_key(params[:search_key])
@@ -25,7 +25,7 @@ class CommentsController < ProtectedController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = @playlist.comments.build(comment_params)
+    @comment = Comment.new(comment_params)
 
     if @comment.save
       render json: @comment, status: :created, location: @comment
