@@ -5,5 +5,9 @@ class UserSerializer < ActiveModel::Serializer
   def playlists
     object.playlists.pluck(:id)
   end
-  
+
+  def comments
+    object.playlists.pluck(:id)
+  end
+
 end

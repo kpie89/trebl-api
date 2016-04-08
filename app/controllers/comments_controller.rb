@@ -1,5 +1,5 @@
 class CommentsController < OpenReadController
-  before_action :set_comment, only: [:show, :update, :destroy]
+  before_action :set_comment, only: [:update, :destroy]
   # before_action :set_playlist
 
   def search_tracks
@@ -25,9 +25,8 @@ class CommentsController < OpenReadController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    @comment = current_user.comments.new(comment_params)
 
-    @comment.user_id = get_user
 
     if @comment.save
       render json: @comment, status: :created, location: @comment
@@ -39,7 +38,7 @@ class CommentsController < OpenReadController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    @comment = Comment.find(params[:id])
+    @comment = current_user.comments.find(params[:id])
 
     if @comment.update(comment_params)
       head :no_content

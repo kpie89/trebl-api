@@ -1,5 +1,5 @@
 class Song < ActiveRecord::Base
-  has_many :playlists, inverse_of: :song
+  has_many :playlists, inverse_of: :playlist
   has_many :comments, inverse_of: :song
 
   def self.search_songs(key)
