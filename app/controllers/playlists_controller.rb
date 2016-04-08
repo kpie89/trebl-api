@@ -20,7 +20,7 @@ class PlaylistsController < OpenReadController
   def create
     # @song = current_user.playlist.songs.new song_params
     # @song.playlist_id = @playlist.id
-    @playlist = current_user.playlists.new(playlist_params)
+    @playlist = current_user.playlists.build(playlist_params)
 
     if @playlist.save
       render json: @playlist, status: :created, location: @playlist
@@ -56,6 +56,6 @@ class PlaylistsController < OpenReadController
     end
 
     def playlist_params
-      params.require(:playlist).permit(:title, :desc, :person_id, :song_id)
+      params.require(:playlist).permit(:title, :desc, :person_id, :song_id, :user_id)
     end
 end
